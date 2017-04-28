@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class _01_ArrayList {
+	public static void main(String[] args) {
+		Person l1 = new Person("일남규", "20", "1111", "1");
+		Person l2 = new Person("이남규", "21", "2222", "2");
+		Person l3 = new Person("삼남규", "22", "3333", "3");
+		Person l4 = new Person("사남규", "23", "4444", "4");
+		Person l5 = new Person("오남규", "24", "5555", "5");
+		Person l6 = new Person("육남규", "25", "6666", "6");
+		Person l7 = new Person("칠남규", "26", "7777", "7");
+		Person l8 = new Person("팔남규", "27", "8888", "8");
+		Person l9 = new Person("구남규", "28", "9999", "9");
+		Person l10 = new Person("십남규", "29", "1010", "10");
+
+		List<Person> lList = new ArrayList<Person>();
+
+		lList.add(l1);
+		lList.add(l2);
+		lList.add(l3);
+		lList.add(l4);
+		lList.add(l5);
+		lList.add(l6);
+		lList.add(l7);
+		lList.add(l8);
+		lList.add(l9);
+		lList.add(l10);
+
+		for (Person print : lList)
+			System.out.println(print);
+	}
+}
+
+class Person {
+	private String name, age, phone, number;
+
+	public Person(String string, String string2, String string3, String string4) {
+		this.name = string;
+		this.age = string2;
+		this.phone = string3;
+		this.number = string4;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getLoc() {
+		return number;
+	}
+
+	public void setLoc(String number) {
+		this.number = number;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + ", phone=" 
+				+ phone + ", number=" + number + "]";
+	}
+}
