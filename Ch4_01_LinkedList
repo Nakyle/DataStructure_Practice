@@ -1,0 +1,190 @@
+public class LinkedList {
+
+	//////////////////////////////////////////
+	/* Main */
+	public static void main(String[] args) {
+		LinkedList numbers = new LinkedList();
+
+		// 추가
+		// numbers.addFirst(30);
+
+		// 추가
+		numbers.addLast(5);
+		numbers.addLast(10);
+		numbers.addLast(20);
+		numbers.addLast(30);
+		// System.out.println(numbers.node(0));
+
+		numbers.add(1, 15);
+		// index 1에 15를 삽입한다.
+		// 즉 10과 20 사이에 15를 삽입한다.
+
+		System.out.println(numbers);
+
+		// System.out.println(numbers.removeFirst());
+		// System.out.println(numbers.remove(1));
+		// ystem.out.println(numbers.removeLast());
+		// System.out.println(numbers);
+
+		// System.out.println(numbers.size()); // 사이즈 조회
+		// System.out.println(numbers.get(1)); // 특정위치의 값 조회
+
+		System.out.println(numbers.indexOf(15));
+		// 20이라는 값의 인덱스 위치를 조회
+	}
+
+	//////////////////////////////////////////
+
+	private Node head;
+	private Node tail;
+	private int size = 0;
+
+	private class Node {
+		private Object data;
+		private Node next;
+
+		public Node(Object input) {
+			this.data = input;
+			this.next = null;
+		}
+
+		public String toString() {
+			return String.valueOf(this.data);
+		}
+	}
+
+	// head에 데이터를 추가한다.
+	public void addFirst(Object input) {
+		Node newNode = new Node(input);
+		newNode.next = head; // 다음 노드의 head값을 지정한다.
+		head = newNode; // 지금 생성한 노드의 head를 가리킨다.
+		size++;
+
+		if (head.next == null) {
+			tail = head;
+		}
+	}
+
+	public void addLast(Object input) {
+		Node newNode = new Node(input);
+
+		if (size == 0) {
+			addFirst(input);
+			// 데이터가 없는 상태라면 tail은 데이터가 존재하지않기 때문에
+			// addFirst 사용
+		} else {
+			tail.next = newNode;
+			tail = newNode;
+			size++;
+		}
+	}
+
+	// 출력해보고 싶으면 앞에 public
+	Node node(int index) {
+		Node x = head;
+
+		for (int i = 0; i < index; i++) {
+			x = x.next;
+		}
+		return x;
+	}
+
+	public void add(int k, Object input) {
+		if (k == 0) {
+			addFirst(input);
+		} else {
+			Node temp1 = node(k - 1); // 이전 노드 알아내기
+			Node temp2 = temp1.next; // 다음 노드 알아내기
+
+			Node newNode = new Node(input); // 새로운 노드 생성
+			temp1.next = newNode; // 이전 노드가 현재 노드를 가리키도록
+			newNode.next = temp2; // 현재 노드가 다음 노드를 가리키도록
+			size++;
+
+			if (newNode.next == null) {
+				// 추가한 노드가 마지막 노드일 경우
+				tail = newNode;
+			}
+		}
+	}
+
+	public String toString() {
+		if (head == null) {
+			return "[]";
+		}
+
+		Node temp = head;
+		String str = "[";
+
+		while (temp.next != null) {
+			str += temp.data + ", ";
+			temp = temp.next;
+			// 현재 temp의 next값으로 바꿈 (다음 Node로)
+
+			// 마지막 노드에서는 temp.next가 null이므로
+			// 반복문에서 탈출함
+		}
+		str += temp.data;
+		// 마지막 값에서는 콤마(,)가 필요하지 않으므로 수동으로 입력
+
+		return str + "]";
+	}
+
+	public Object removeFirst() {
+		Node temp = head;
+		head = head.next;
+		Object returnData = temp.data; // data 값 저장해둠
+		temp = null;
+		size--;
+
+		return returnData;
+	}
+
+	public Object remove(int k) {
+		if (k == 0) {
+			return removeFirst();
+		} else {
+			Node temp = node(k - 1);
+			Node todoDeleted = temp.next; // 삭제하려는 Node를 가리킴
+			temp.next = temp.next.next; // 삭제하려는 next를 가져옴
+			// temp.next = todoDelted.next;
+
+			Object returnData = todoDeleted.data;
+
+			if (todoDeleted == tail) {
+				// 삭제하려는 Node가 tail 이라면
+				tail = temp;
+			}
+			todoDeleted = null; // 굳이 안해줘도 되긴함
+			size--;
+			return returnData;
+		}
+	}
+
+	public Object removeLast() {
+		return remove(size - 1);
+	}
+
+	public int size() {
+		return size;
+	}
+
+	public Object get(int k) {
+		Node temp = node(k);
+		return temp.data;
+	}
+
+	public int indexOf(Object data) {
+		Node temp = head;
+		int index = 0;
+		while (temp.data != data) {
+			temp = temp.next;
+			index++;
+			if (temp == null) {
+				// 가장 끝에 있는 Node에 도달했을 경우
+				return -1; // 검색을 종료 시킨다.
+			}
+		}
+		return index;
+	}
+}
